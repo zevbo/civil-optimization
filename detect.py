@@ -1,23 +1,23 @@
-import keras_ocr # type: ignore 
+# import keras_ocr # type: ignore 
+import easyocr
 
-pipeline = keras_ocr.pipeline.Pipeline()
+# pipeline = keras_ocr.pipeline.Pipeline()
 
 relevant_words = {"copper, iron", "lead", "brass", "material"}
 
+reader = easyocr.Reader(['en'])
 def relevant_files(files: list[str]) -> list[str]:
-    images = [
-        keras_ocr.tools.read(file) for file in files
+    all_results = [
+        # keras_ocr.tools.read(file) 
+        reader.readtext(file)
+        for file in files
     ]
 
-    # Each list of predictions in prediction_groups is a list of
-    # (word, box) tuples.
-    prediction_groups = pipeline.recognize(images)
-
     results: list[str] = []
-    for file, group in zip(files, prediction_groups):
+    for file, this_results in zip(files, all_results):
         all_words: set[str] = set()
-        for t in group:
-            all_words.add(t[0].lower())
+        for t in this_results:
+            all_words.add(t[1].lower())
         if any(word in all_words for word in relevant_words):
             results.append(file)
 
