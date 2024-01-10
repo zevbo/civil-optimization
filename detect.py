@@ -17,7 +17,7 @@ relevant_groups = [RelGroup({"application", "new", "modified", "water", "service
 
 def relevant_files(files: list[str]) -> list[str]:
     images = [
-        keras_ocr.tools.read(file) for file in sorted(files)
+        keras_ocr.tools.read(file) for file in files
     ]
 
     # Each list of predictions in prediction_groups is a list of
