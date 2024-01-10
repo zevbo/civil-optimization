@@ -4,12 +4,8 @@ import os
 from pathlib import Path
 
 def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> None:
-    cwd = os.getcwd()
-    proc = subprocess.Popen(['dir', folder1], stdout=subprocess.PIPE, cwd=cwd)
-    stdout = proc.stdout 
-    assert stdout is not None
-    results = stdout.read().splitlines()
-    s_results = [f"{folder1}/{r.decode()}" for r in results]
+    results = os.listdir(folder1)
+    s_results = [f"{folder1}/{r}" for r in results]
     if Path(folder2).exists():
         print(f"Selected output folder {folder2} already exists. Aborting...")
         return
