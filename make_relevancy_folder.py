@@ -5,7 +5,7 @@ from pathlib import Path
 
 def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> None:
     cwd = os.getcwd()
-    proc = subprocess.Popen(['ls', folder1], stdout=subprocess.PIPE, cwd=cwd)
+    proc = subprocess.Popen(['dir', folder1], stdout=subprocess.PIPE, cwd=cwd)
     stdout = proc.stdout 
     assert stdout is not None
     results = stdout.read().splitlines()
