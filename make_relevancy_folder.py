@@ -5,7 +5,7 @@ from pathlib import Path
 
 def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> None:
     results = sorted(os.listdir(folder1))
-    s_results = [f"{folder1}/{r}" for r in results]
+    s_results = [f"{folder1}\{r}" for r in results]
     if Path(folder2).exists():
         print(f"Selected output folder {folder2} already exists. Aborting...")
         return
