@@ -13,6 +13,7 @@ def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> 
     num_rel_files = 0
     for i in range(0, len(s_results), batch_size):
         j = min(i + batch_size, len(s_results))
+        print(f"Next file: {s_results[i]}")
         rel_files = relevant_files(s_results[i:j])
         num_rel_files += len(rel_files)
         for file in rel_files: 
