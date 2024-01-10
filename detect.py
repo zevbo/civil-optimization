@@ -12,7 +12,7 @@ class RelGroup:
         total_misses = sum(word not in all_words for word in self.words)
         return total_misses <= self.max_misses
 
-relevant_words = {"copper, iron", "lead", "brass", "material"}
+relevant_words = {"copper, iron", "lead", "brass", "material", "type"}
 relevant_groups = [RelGroup({"application", "new", "modified", "water", "service"}, 1)]
 
 def relevant_files(files: list[str]) -> list[str]:
