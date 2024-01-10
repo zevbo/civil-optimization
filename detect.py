@@ -1,7 +1,7 @@
 import keras_ocr # type: ignore 
 from dataclasses import dataclass 
 
-pipeline = keras_ocr.pipeline.Pipeline(max_size=4096)
+pipeline = keras_ocr.pipeline.Pipeline()
 
 @dataclass 
 class RelGroup: 
@@ -29,7 +29,6 @@ def relevant_files(files: list[str]) -> list[str]:
         all_words: list[str] = []
         for t in group:
             all_words.append(t[0].lower())
-        print(f"{all_words = }")
         all_words_set = set(all_words)
         if any(word in all_words_set for word in relevant_words) or any(rel_group.is_matched(all_words_set) for rel_group in relevant_groups):
             results.append(file)
