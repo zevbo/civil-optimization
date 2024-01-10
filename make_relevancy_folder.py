@@ -18,6 +18,6 @@ def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> 
         for file in rel_files: 
             p = Path(file)
             fname = p.name
-            os.system(f"cp {folder1}/{fname} {folder2}/{fname}")
+            os.system(f"copy {folder1}/{fname} {folder2}/{fname}")
     print(f"Sorted out {100 * (1 - num_rel_files / len(s_results))}% of the {len(s_results)} files. New files can be found in \"{folder2}\"")
 
