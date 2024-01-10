@@ -1,8 +1,19 @@
 import keras_ocr # type: ignore 
+from dataclasses import dataclass 
 
 pipeline = keras_ocr.pipeline.Pipeline(max_size=4096)
 
+@dataclass 
+class RelGroup: 
+    words: set[str]
+    max_misses: int
+
+    def is_matched(self, all_words: set[str]) -> bool: 
+        total_misses = sum(word not in all_words for word in self.words)
+        return total_misses <= self.max_misses
+
 relevant_words = {"copper, iron", "lead", "brass", "material"}
+relevant_groups = [RelGroup({"application", "new", "modified", "water", "service"}, 1)]
 
 def relevant_files(files: list[str]) -> list[str]:
     images = [
@@ -20,7 +31,8 @@ def relevant_files(files: list[str]) -> list[str]:
             all_words.append(t[0].lower())
         print(f"{all_words = }")
         all_words_set = set(all_words)
-        if any(word in all_words_set for word in relevant_words):
+        if any(word in all_words_set for word in relevant_words) or any(rel_group.is_matched(all_words_set) for rel_group in relevant_groups):
             results.append(file)
+
 
     return results
