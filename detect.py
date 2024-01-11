@@ -13,7 +13,7 @@ class RelGroup:
         return total_misses <= self.max_misses
 
 relevant_words = {"copper, iron", "lead", "brass", "material", "type"}
-relevant_groups = [RelGroup({"application", "new", "modified", "water", "service"}, 1)]
+relevant_groups = [RelGroup({"application", "new", "modified", "water", "service"}, 1), RelGroup({"second", "taxing", "district", "water", "department", "action", "taken"}, 1)]
 
 def relevant_files(files: list[str]) -> list[str]:
     images = [
