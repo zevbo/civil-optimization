@@ -10,6 +10,7 @@ def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> 
         print(f"Selected output folder {folder2} already exists. Aborting...")
         return
     os.system(f"mkdir \"{folder2}\"")
+    print("Relevancy folder created")
     num_rel_files = 0
     for i in range(0, len(s_results), batch_size):
         j = min(i + batch_size, len(s_results))
