@@ -17,10 +17,17 @@ def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> 
         print(f"Next file: {s_results[i]}")
         rel_files = relevant_files(s_results[i:j])
         num_rel_files += len(rel_files)
-        for file in rel_files: 
-            p = Path(file)
+        for rel_file in rel_files: 
+            p = Path(rel_file.file)
             fname = p.name
-            os.system(f"copy \"{folder1}\{fname}\" \"{folder2}\{fname}\"")
+            sub_str = ""
+            if rel_file.sub_group is not None: 
+                sub_group_p = p.parent / rel_file.sub_group 
+                if not sub_group_p.exists():
+                    sub_group_p.mkdir()
+                sub_str = f"\{sub_group_p}"
+                    
+            os.system(f"copy \"{folder1}\{fname}\" \"{folder2}{sub_str}\{fname}\"")
         print(f"{100 * j / len(s_results)}% Complete [{j} out of {len(s_results)}]")
     print(f"Sorted out {100 * (1 - num_rel_files / len(s_results))}% of the {len(s_results)} files. New files can be found in \"{folder2}\"")
 
