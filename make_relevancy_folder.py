@@ -3,9 +3,11 @@ import subprocess
 import os
 from pathlib import Path
 
-def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> None:
+from system_check import COPY_CMD, FOLDER_SEP
+
+def make_relevancy_folder(folder1: Path, folder2: Path, batch_size: int = 100) -> None:
     results = sorted(os.listdir(folder1))
-    s_results = [f"{folder1}\{r}" for r in results]
+    s_results = [f"{folder1 / r}" for r in results]
     if Path(folder2).exists():
         print(f"Selected output folder {folder2} already exists. Aborting...")
         return
@@ -20,14 +22,13 @@ def make_relevancy_folder(folder1: str, folder2: str, batch_size: int = 100) -> 
         for rel_file in rel_files: 
             p = Path(rel_file.file)
             fname = p.name
-            sub_str = ""
+            group_p = folder2
             if rel_file.sub_group is not None: 
-                sub_group_p = p.parent / rel_file.sub_group 
+                sub_group_p = group_p / rel_file.sub_group 
                 if not sub_group_p.exists():
                     sub_group_p.mkdir()
-                sub_str = f"\{sub_group_p}"
-                    
-            os.system(f"copy \"{folder1}\{fname}\" \"{folder2}{sub_str}\{fname}\"")
+                group_p = sub_group_p
+            os.system(f"{COPY_CMD} \"{folder1 / fname}\" \"{group_p / fname}\"")
         print(f"{100 * j / len(s_results)}% Complete [{j} out of {len(s_results)}]")
     print(f"Sorted out {100 * (1 - num_rel_files / len(s_results))}% of the {len(s_results)} files. New files can be found in \"{folder2}\"")
 
