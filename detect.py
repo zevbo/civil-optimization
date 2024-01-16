@@ -1,7 +1,7 @@
 import keras_ocr # type: ignore 
 from dataclasses import dataclass 
 
-pipeline = keras_ocr.pipeline.Pipeline(max_size=1024)
+pipeline = keras_ocr.pipeline.Pipeline(max_size=2048)
 
 @dataclass 
 class RelGroup: 
